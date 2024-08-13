@@ -1,0 +1,77 @@
+import React, { useState } from "react";
+import Header from "./Header";
+
+const Login = () => {
+  const [isSignIn, setisSignIn] = useState(true);
+
+  const handleLogin = () => {
+    setisSignIn(!isSignIn);
+  };
+  return (
+    <div>
+      <Header />
+      <div className="absolute">
+        <img
+          className="absolute min-h-full"
+          class="concord-img vlv-creative"
+          src="https://assets.nflxext.com/ffe/siteui/vlv3/b2c3e95b-b7b5-4bb7-a883-f4bfc7472fb7/19fc1a4c-82db-4481-ad08-3a1dffbb8c39/IN-en-20240805-POP_SIGNUP_TWO_WEEKS-perspective_WEB_24a485f6-1820-42be-9b60-1b066f1eb869_small.jpg"
+          srcset="https://assets.nflxext.com/ffe/siteui/vlv3/b2c3e95b-b7b5-4bb7-a883-f4bfc7472fb7/19fc1a4c-82db-4481-ad08-3a1dffbb8c39/IN-en-20240805-POP_SIGNUP_TWO_WEEKS-perspective_WEB_24a485f6-1820-42be-9b60-1b066f1eb869_small.jpg 1000w, https://assets.nflxext.com/ffe/siteui/vlv3/b2c3e95b-b7b5-4bb7-a883-f4bfc7472fb7/19fc1a4c-82db-4481-ad08-3a1dffbb8c39/IN-en-20240805-POP_SIGNUP_TWO_WEEKS-perspective_WEB_24a485f6-1820-42be-9b60-1b066f1eb869_medium.jpg 1500w, https://assets.nflxext.com/ffe/siteui/vlv3/b2c3e95b-b7b5-4bb7-a883-f4bfc7472fb7/19fc1a4c-82db-4481-ad08-3a1dffbb8c39/IN-en-20240805-POP_SIGNUP_TWO_WEEKS-perspective_WEB_24a485f6-1820-42be-9b60-1b066f1eb869_large.jpg 1800w"
+          alt="bg"
+        />
+      </div>
+      <div className="absolute my-36 w-3/12  mx-auto right-0 left-0">
+        <form className="bg-black bg-opacity-80 p-6">
+          <h1 className="text-white text-left text-2xl font-bold">
+            {isSignIn ? "Sign In" : "Sign Up"}
+          </h1>
+          {!isSignIn && (
+            <input
+              className="w-full p-2 my-2 bg-gray-700 border border-black rounded-lg"
+              type="text"
+              placeholder="Full Name"
+            />
+          )}
+
+          <input
+            className="w-full p-2 my-2 bg-gray-700 border border-black rounded-lg"
+            type="email"
+            placeholder="Email"
+          />
+          <input
+            className="bg-gray-700 w-full p-2 my-2 rounded-lg text-gray-400"
+            type="password"
+            placeholder="Password"
+          />
+          {!isSignIn && (
+            <>
+              <div className="text-left py-2">
+                <label className="text-white text-left">
+                  Above 18 <input name="gender" type="radio" />
+                </label>
+                <label className="px-1 text-white">
+                  Below 18 <input name="gender" className="" type="radio" />
+                </label>
+              </div>
+            </>
+          )}
+          <button
+            className="w-full p-2 my-4  rounded-lg  bg-red-600 text-white"
+            type="submit"
+          >
+            {isSignIn ? "Sign In" : "Sign Up"}
+          </button>
+          <p
+            className="text-white text-left text-sm cursor-pointer"
+            onClick={handleLogin}
+          >
+            {isSignIn
+              ? "Are yo New to Netflix?SignUp"
+              : "Already a User?SignIn"}
+          </p>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default Login;
