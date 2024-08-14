@@ -9,6 +9,7 @@ const Login = () => {
   const name = useRef(null);
   const handleLogin = () => {
     setisSignIn(!isSignIn);
+    setErrmsg(null);
   };
   const handlesin = () => {
     const mes = checkvalidate(
