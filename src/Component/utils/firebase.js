@@ -6,6 +6,8 @@ import { getAnalytics } from "firebase/analytics";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+import { getAuth } from "firebase/auth";
 const firebaseConfig = {
   apiKey: "AIzaSyD1dOh0_NCSOpbcFzufVgwUNtVY3RgCuh0",
   authDomain: "netflixgpt-1a5f5.firebaseapp.com",
@@ -19,3 +21,4 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+export const auth = getAuth();
