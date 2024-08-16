@@ -1,6 +1,11 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { checkvalidate } from "./utils/FormValidate";
+import { auth } from "./utils/firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 const Login = () => {
   const [isSignIn, setisSignIn] = useState(true);
   const [errmsg, setErrmsg] = useState(null);
@@ -20,6 +25,48 @@ const Login = () => {
     // console.log(name.current.value);
     console.log(mes);
     setErrmsg(mes);
+
+    if (mes) return;
+    if (!isSignIn) {
+      // Sign Up
+      createUserWithEmailAndPassword(
+        auth,
+
+        email.current.value,
+        password.current.value,
+        name.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log("USER:", user);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrmsg(errorCode + "--" + errorMessage);
+          // ..
+        });
+    } else {
+      // Sign In
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrmsg(errorCode + " -- " + errorMessage);
+        });
+    }
   };
 
   return (
