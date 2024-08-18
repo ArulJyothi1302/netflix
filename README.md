@@ -13,9 +13,19 @@
 - useRef Hook
 - Firebase Setup
 - Deploying App to Production
+  - cmd
+    - npm i -g firebase-tools <!-- install cli before using firebase login -->
+    - firebase login
+    - firebase init <!-- create firebase config -- >
+    - setup hoisting <!-- for deploing choose housting and select required for need -->
+  - Build
+    - npm run build
+    - firebase deploy
 - Create Signup user Account
 - Enabling Authentication
 - Setting up Authentication
+- Setting up Redux store
+- setting add and remove user slices
 
 # Features
 
