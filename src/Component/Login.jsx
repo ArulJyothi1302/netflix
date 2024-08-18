@@ -1,20 +1,36 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "./Header";
 import { checkvalidate } from "./utils/FormValidate";
 import { auth } from "./utils/firebase";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser, removeUser } from "./utils/userSlice";
 const Login = () => {
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
   const [isSignIn, setisSignIn] = useState(true);
   const [errmsg, setErrmsg] = useState(null);
   const email = useRef(null);
   const password = useRef(null);
   const name = useRef(null);
+  useEffect(() => {
+    if (!auth.currentUser) {
+      dispatch(removeUser());
+    }
+  }, [dispatch]);
   const handleLogin = () => {
     setisSignIn(!isSignIn);
     setErrmsg(null);
+    const inputs = document.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) {
+      inputs[i].value = "";
+    }
   };
   const handlesin = () => {
     const mes = checkvalidate(
@@ -22,6 +38,7 @@ const Login = () => {
       password.current.value,
       name.current?.value
     );
+
     // console.log(name.current.value);
     console.log(mes);
     setErrmsg(mes);
@@ -39,7 +56,29 @@ const Login = () => {
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user;
-          console.log("USER:", user);
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL: "https://avatars.githubusercontent.com/u/67818016?v=4",
+          })
+            .then(() => {
+              // Profile updated!
+              // ...
+              const { uid, email, displayName, photoURL } = user;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );
+              navigate("/browse");
+            })
+            .catch((error) => {
+              // An error occurred
+              // ...
+            });
+
           // ...
         })
         .catch((error) => {
@@ -59,6 +98,7 @@ const Login = () => {
           // Signed in
           const user = userCredential.user;
           console.log(user);
+          navigate("/browse");
           // ...
         })
         .catch((error) => {
@@ -72,12 +112,11 @@ const Login = () => {
   return (
     <div className="">
       <Header />
-      <div className="absolute min-h-0">
+      <div className="absolute">
         <img
-          className=""
-          class="concord-img vlv-creative"
+          className="concord-img vlv-creative h-screen w-screen"
           src="https://assets.nflxext.com/ffe/siteui/vlv3/b2c3e95b-b7b5-4bb7-a883-f4bfc7472fb7/19fc1a4c-82db-4481-ad08-3a1dffbb8c39/IN-en-20240805-POP_SIGNUP_TWO_WEEKS-perspective_WEB_24a485f6-1820-42be-9b60-1b066f1eb869_small.jpg"
-          srcset="https://assets.nflxext.com/ffe/siteui/vlv3/b2c3e95b-b7b5-4bb7-a883-f4bfc7472fb7/19fc1a4c-82db-4481-ad08-3a1dffbb8c39/IN-en-20240805-POP_SIGNUP_TWO_WEEKS-perspective_WEB_24a485f6-1820-42be-9b60-1b066f1eb869_small.jpg 1000w, https://assets.nflxext.com/ffe/siteui/vlv3/b2c3e95b-b7b5-4bb7-a883-f4bfc7472fb7/19fc1a4c-82db-4481-ad08-3a1dffbb8c39/IN-en-20240805-POP_SIGNUP_TWO_WEEKS-perspective_WEB_24a485f6-1820-42be-9b60-1b066f1eb869_medium.jpg 1500w, https://assets.nflxext.com/ffe/siteui/vlv3/b2c3e95b-b7b5-4bb7-a883-f4bfc7472fb7/19fc1a4c-82db-4481-ad08-3a1dffbb8c39/IN-en-20240805-POP_SIGNUP_TWO_WEEKS-perspective_WEB_24a485f6-1820-42be-9b60-1b066f1eb869_large.jpg 1800w"
+          // srcset="https://assets.nflxext .com/ffe/siteui/vlv3/b2c3e95b-b7b5-4bb7-a883-f4bfc7472fb7/19fc1a4c-82db-4481-ad08-3a1dffbb8c39/IN-en-20240805-POP_SIGNUP_TWO_WEEKS-perspective_WEB_24a485f6-1820-42be-9b60-1b066f1eb869_small.jpg 1000w, https://assets.nflxext.com/ffe/siteui/vlv3/b2c3e95b-b7b5-4bb7-a883-f4bfc7472fb7/19fc1a4c-82db-4481-ad08-3a1dffbb8c39/IN-en-20240805-POP_SIGNUP_TWO_WEEKS-perspective_WEB_24a485f6-1820-42be-9b60-1b066f1eb869_medium.jpg 1500w, https://assets.nflxext.com/ffe/siteui/vlv3/b2c3e95b-b7b5-4bb7-a883-f4bfc7472fb7/19fc1a4c-82db-4481-ad08-3a1dffbb8c39/IN-en-20240805-POP_SIGNUP_TWO_WEEKS-perspective_WEB_24a485f6-1820-42be-9b60-1b066f1eb869_large.jpg 1800w"
           alt="bg"
         />
       </div>
@@ -109,6 +148,7 @@ const Login = () => {
             className="bg-gray-700 w-full p-2 my-2 rounded-lg text-gray-400"
             type="password"
             placeholder="Password"
+            required
           />
           {!isSignIn && (
             <>
