@@ -7,13 +7,11 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser, removeUser } from "./utils/userSlice";
 const Login = () => {
   const dispatch = useDispatch();
 
-  const navigate = useNavigate();
   const [isSignIn, setisSignIn] = useState(true);
   const [errmsg, setErrmsg] = useState(null);
   const email = useRef(null);
@@ -72,7 +70,6 @@ const Login = () => {
                   photoURL: photoURL,
                 })
               );
-              navigate("/browse");
             })
             .catch((error) => {
               // An error occurred
@@ -98,7 +95,6 @@ const Login = () => {
           // Signed in
           const user = userCredential.user;
           console.log(user);
-          navigate("/browse");
           // ...
         })
         .catch((error) => {
@@ -120,10 +116,10 @@ const Login = () => {
           alt="bg"
         />
       </div>
-      <div className="absolute my-36 w-4/12  mx-auto right-0 left-0">
+      <div className="absolute my-36 w-4/12 sm:w-12/12  mx-auto right-0 left-0">
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="absolute bg-black bg-opacity-80 px-12 py-6  "
+          className="absolute sm:w-full bg-black bg-opacity-80 px-12 py-6  "
         >
           <h1 className="text-white text-left text-2xl font-bold">
             {isSignIn ? "Sign In" : "Sign Up"}

@@ -26,6 +26,10 @@
 - Setting up Authentication
 - Setting up Redux store
 - setting add and remove user slices
+- Update Profile
+- Bug Fix
+  - User not signed in not navigate to Browse Page
+  - Loggeedin- Navigate to browse does not navigate to login page
 
 # Features
 
