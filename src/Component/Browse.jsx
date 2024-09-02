@@ -1,21 +1,17 @@
 import React from "react";
 import Header from "./Header";
+import MainContainer from "./MainContainer";
+import SecondaryContainer from "./SecondaryContainer";
+import useNowPlayingMovie from "./hooks/useNowPlayingMovie";
 
 const Browse = () => {
+  useNowPlayingMovie();
   return (
     <>
       <div className="">
         <Header />
-      </div>
-      <div className="absolute top-20 right-10 left-10 flex flex-col justify-center items-center">
-        <h1 className="">Hello</h1>
-        <h2>Welcome to Netflix</h2>
-        <form>
-          <fieldset className="p-2 bg-gray-400 rounded-lg">
-            <label className="p-2 bg-slate-100 rounded-lg m-1">Name:</label>
-            <input className="p-2 bg-slate-500 rounded-lg" type="text " />
-          </fieldset>
-        </form>
+        <MainContainer />
+        <SecondaryContainer />
       </div>
     </>
   );

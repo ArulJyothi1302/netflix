@@ -30,6 +30,9 @@
 - Bug Fix
   - User not signed in not navigate to Browse Page
   - Loggeedin- Navigate to browse does not navigate to login page
+- Create TMDB app and register for key
+  - Read Documentation.
+  - Go to Api Reference.
 
 # Features
 
