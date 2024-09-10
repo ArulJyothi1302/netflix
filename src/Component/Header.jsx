@@ -22,7 +22,7 @@ const Header = () => {
   };
   const dispatch = useDispatch();
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
@@ -44,29 +44,37 @@ const Header = () => {
         navigate("/");
       }
     });
+
+    return () => unsubscribe();
   }, [dispatch, navigate]);
   return (
-    <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10">
-      <img className="w-44" src={NET_LOGO} alt="logo" />
+    <>
+      <div className="absolute w-full px-8 py-2 bg-gradient-to-b from-black z-10">
+        <img className="w-44" src={NET_LOGO} alt="logo" />
 
-      {user && (
-        <header className="absolute right-0 top-5 bg-opacity-85 flex flex-wrap justify-end">
-          <img className="w-8 h-8  m-4" alt="userImg" src={user.photoURL} />
-          <h1 className="p-4 m-2 text-blue-800 font-extrabold">
-            {user.displayName}
-          </h1>
-          <button className="rounded-full bg-gray-500 text-white p-2 m-2">
-            profile
-          </button>
-          <button
-            className="rounded-lg text-white bg-red-700 p-2 m-2"
-            onClick={handleSignout}
-          >
-            Sign Out
-          </button>
-        </header>
-      )}
-    </div>
+        {user && (
+          <header className="absolute right-0 top-5 bg-opacity-85 flex flex-wrap">
+            <img
+              className="w-8 h-8 rounded-full  m-4"
+              alt="userImg"
+              src={user.photoURL}
+            />
+            <h1 className="p-4 m-2 text-red-700 font-extrabold">
+              {user.displayName}
+            </h1>
+            <button className="rounded-xl bg-gray-500 text-white p-4 m-2">
+              profile
+            </button>
+            <button
+              className="rounded-lg text-white bg-red-700 p-2 m-2"
+              onClick={handleSignout}
+            >
+              Sign Out
+            </button>
+          </header>
+        )}
+      </div>
+    </>
   );
 };
 
