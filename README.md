@@ -43,6 +43,12 @@
     - MovieList
       - Movie Cards
         -Movie List of popular, tending,etc...
+  - Gpt-Search Page
+    - GPT-Search-Bar
+    - Multilingual Feature
+  - GPT Movies Suggestion
+    - Secured Keys
+  - Memoizations
 
 # Features
 

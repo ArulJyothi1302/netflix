@@ -6,8 +6,7 @@ export const MOVIE_OPT = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2OWIwNjhiZTM5OTc1ZjcwMzRjNDg1MjE5OTJmZjY2YSIsIm5iZiI6MTcyNTA5MzQxNS40MjEwOTYsInN1YiI6IjY2ZDJiOWQ3ZWE3M2E0ZmUxMDk0NGRiOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Izq5hLpU5fKKJ_buLgNhOLagDfMvtzkwAvExvOMLMf4",
+    Authorization: `Bearer ${process.env.REACT_APP_TMDB_KEY}`,
   },
 };
 export const IMG_CDN_URL = "https://image.tmdb.org/t/p/w500/";
@@ -20,3 +19,5 @@ export const SUP_LANG = [
   { identifier: "hin", name: "हिंदी" },
   { identifier: "kor", name: "한국인" },
 ];
+
+export const OPENAI_KEY = `${process.env.REACT_APP_OPENAI_KEY}`;
