@@ -1,13 +1,16 @@
 import React, { useEffect } from "react";
-import { NET_LOGO } from "./utils/constants";
+import { NET_LOGO, SUP_LANG } from "./utils/constants";
 import { useNavigate } from "react-router-dom";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./utils/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "./utils/userSlice";
+import { toggleSearchPage } from "./utils/gptSearchSlice";
+import { changeLang } from "./utils/configSlice";
 
 const Header = () => {
   const user = useSelector((store) => store.user);
+  const gptEnable = useSelector((store) => store.gpt.show);
   const navigate = useNavigate();
   const handleSignout = () => {
     signOut(auth)
@@ -19,6 +22,9 @@ const Header = () => {
         console.log(error.message);
         // An error happened.
       });
+  };
+  const handleGptSearch = () => {
+    dispatch(toggleSearchPage());
   };
   const dispatch = useDispatch();
   useEffect(() => {
@@ -47,6 +53,10 @@ const Header = () => {
 
     return () => unsubscribe();
   }, [dispatch, navigate]);
+
+  const handleLang = (e) => {
+    dispatch(changeLang(e.target.value));
+  };
   return (
     <>
       <div className="absolute w-full px-8 py-2 bg-gradient-to-b from-black z-10">
@@ -54,19 +64,36 @@ const Header = () => {
 
         {user && (
           <header className="absolute right-0 top-5 bg-opacity-85 flex flex-wrap">
+            {gptEnable && (
+              <select
+                className="px-4 m-4 bg-black text-white border border-1-white rounded-lg"
+                onChange={handleLang}
+              >
+                {SUP_LANG.map((lang) => (
+                  <option key={lang.identifier} value={lang.identifier}>
+                    {lang.name}
+                  </option>
+                ))}
+              </select>
+            )}
+            <button
+              className="bg-violet-900 py-2 px-8 m-4 rounded-lg   text-white "
+              onClick={handleGptSearch}
+            >
+              {gptEnable ? "Home Page" : "GPT Search"}
+            </button>
+
             <img
-              className="w-8 h-8 rounded-full  m-4"
+              className="w-12 h-12 rounded-full  m-4"
               alt="userImg"
               src={user.photoURL}
             />
-            <h1 className="p-4 m-2 text-red-700 font-extrabold">
-              {user.displayName}
-            </h1>
-            <button className="rounded-xl bg-gray-500 text-white p-4 m-2">
-              profile
+
+            <button className="rounded-xl bg-cyan-700 text-white p-4 m-4">
+              Profile
             </button>
             <button
-              className="rounded-lg text-white bg-red-700 p-2 m-2"
+              className="rounded-lg text-white bg-red-700 p-2 m-4"
               onClick={handleSignout}
             >
               Sign Out

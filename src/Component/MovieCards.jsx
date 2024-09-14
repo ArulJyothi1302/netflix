@@ -2,6 +2,7 @@ import React from "react";
 import { IMG_CDN_URL } from "./utils/constants";
 
 const MovieCards = ({ poster }) => {
+  if (!poster) return null;
   return (
     <div className="">
       <div className="pl-2">
