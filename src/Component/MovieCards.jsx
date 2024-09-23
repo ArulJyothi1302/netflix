@@ -5,8 +5,8 @@ const MovieCards = ({ poster }) => {
   if (!poster) return null;
   return (
     <div className="">
-      <div className="pl-2">
-        <div className="w-36">
+      <div>
+        <div className="w-36 md:w-48 pr-4">
           <img
             className="rounded-md cursor-pointer"
             alt="MovieName"

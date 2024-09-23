@@ -59,11 +59,11 @@ const Header = () => {
   };
   return (
     <>
-      <div className="absolute w-full px-8 py-2 bg-gradient-to-b from-black z-10">
-        <img className="w-44" src={NET_LOGO} alt="logo" />
+      <div className="absolute w-full px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-col md:flex-row  md:justify-between ">
+        <img className="mx-auto md:mx-0 w-44" src={NET_LOGO} alt="logo" />
 
         {user && (
-          <header className="absolute right-0 top-5 bg-opacity-85 flex flex-wrap">
+          <div className="right-0 top-5 bg-opacity-85 flex flex-wrap justify-center">
             {gptEnable && (
               <select
                 className="px-4 m-4 bg-black text-white border border-1-white rounded-lg"
@@ -84,21 +84,18 @@ const Header = () => {
             </button>
 
             <img
-              className="w-12 h-12 rounded-full  m-4"
+              className="hidden md:block w-12 h-12 rounded-full  m-4"
               alt="userImg"
               src={user.photoURL}
             />
 
-            <button className="rounded-xl bg-cyan-700 text-white p-4 m-4">
-              Profile
-            </button>
             <button
               className="rounded-lg text-white bg-red-700 p-2 m-4"
               onClick={handleSignout}
             >
               Sign Out
             </button>
-          </header>
+          </div>
         )}
       </div>
     </>

@@ -6,7 +6,7 @@ export const checkvalidate = (email, password, name) => {
     password
   );
   if (name !== undefined) {
-    const isName = /^[a-zA-Z+\-]{2,}$/.test(name.trim());
+    const isName = /^[a-zA-Z\s\-]{2,}$/.test(name.trim());
     if (!isName) {
       return "Name is not valid";
     }
