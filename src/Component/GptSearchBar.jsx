@@ -22,7 +22,6 @@ const GptSearchBar = () => {
     return json.results;
   };
   const handleGpptSearchClick = async () => {
-    console.log(search.current.value);
     try {
       setErr("");
       const gptQuery =
@@ -33,17 +32,14 @@ const GptSearchBar = () => {
         messages: [{ role: "user", content: gptQuery }],
         model: "gpt-3.5-turbo",
       });
-      console.log(chatCompletion.choices);
 
       const moviedata = chatCompletion.choices[0]?.message?.content.split(",");
       const promiseArray = moviedata.map((movies) => searchedMovies(movies));
       const tmdbResult = await Promise.all(promiseArray);
-      console.log(tmdbResult);
       dispatch(
         addGptSearchedMovies({ movieName: moviedata, movieResult: tmdbResult })
       );
     } catch (e) {
-      console.log("Error has benn found:" + e);
       setErr("API Token has expired. Please wait for an Update.");
     }
   };
