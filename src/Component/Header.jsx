@@ -19,7 +19,6 @@ const Header = () => {
       })
       .catch((error) => {
         navigate("/err");
-        console.log(error.message);
         // An error happened.
       });
   };
